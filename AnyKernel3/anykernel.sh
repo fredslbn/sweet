@@ -4,14 +4,14 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=SUPER.KERNEL-Sweet
+kernel.string=SUPER.KERNEL SWEET
 do.devicecheck=0
 do.modules=0
 do.systemless=1
 do.cleanup=1
 do.cleanuponabort=0
-device.name1=vayu
-device.name2=bhima
+device.name1=sweet
+device.name2=
 supported.versions=
 '; } # end properties
 
