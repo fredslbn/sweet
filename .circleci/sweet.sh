@@ -48,7 +48,7 @@ FINAL_ZIP_ALIAS=Karenulvay-${DATE}.zip
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=clang17-7
+COMPILER=clang17
 
 ##----------------------------------------------------------##
 # Specify Linker
