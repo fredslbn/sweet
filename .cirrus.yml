@@ -1,10 +1,14 @@
 task:
   name: "Sweet"
+  trigger_type: manual
   timeout_in: 1h
   container:
       image: nexgang/ubuntu:latest
       cpu: 8
       memory: 32G
       
+  setup_script:
+    - apt update && apt upgrade -y
+            
   Build_script:
       - bash clanglinaro.sh
