@@ -43,12 +43,12 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 TANGGAL=$(date +"%F%S")
 
 # Specify Final Zip Name
-ZIPNAME="SUPER.KERNEL-SWEET-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
+ZIPNAME="SUPER.KERNEL-SWEET-(clanglinaro)-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
 
 ##----------------------------------------------------------##
 # Specify compiler.
 
-COMPILER=clang17-7
+COMPILER=clang18-7
 
 ##----------------------------------------------------------##
 # Specify Linker
@@ -88,6 +88,28 @@ function cloneTC() {
     export KERNEL_CCOMPILE32_PATH="${KERNEL_DIR}/gcc32"
     export KERNEL_CCOMPILE32="arm-linux-gnueabihf-"
     export PATH="$KERNEL_CCOMPILE32_PATH/bin:$PATH"
+
+    elif [ $COMPILER = "clang18-7" ];
+	then
+	wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/main/clang-r510928.tar.gz && mkdir clang && tar -xzf clang-r510928.tar.gz -C clang/
+    export KERNEL_CLANG_PATH="${KERNEL_DIR}/clang"
+    export KERNEL_CLANG="clang"
+    export PATH="$KERNEL_CLANG_PATH/bin:$PATH"
+    CLANG_VERSION=$(clang --version | grep version | sed "s|clang version ||")
+	
+    wget https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz && tar -xf gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+    mv gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu gcc64
+    export KERNEL_CCOMPILE64_PATH="${KERNEL_DIR}/gcc64"
+    export KERNEL_CCOMPILE64="aarch64-linux-gnu-"
+    export PATH="$KERNEL_CCOMPILE64_PATH/bin:$PATH"
+    GCC_VERSION=$(aarch64-linux-gnu-gcc --version | grep "(GCC)" | sed 's|.*) ||')
+   
+    wget https://releases.linaro.org/components/toolchain/binaries/7.5-2019.12/arm-linux-gnueabihf/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz && tar -xf gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf.tar.xz
+    mv gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf gcc32
+    export KERNEL_CCOMPILE32_PATH="${KERNEL_DIR}/gcc32"
+    export KERNEL_CCOMPILE32="arm-linux-gnueabihf-"
+    export PATH="$KERNEL_CCOMPILE32_PATH/bin:$PATH"
+
 	
 	fi
 	
@@ -176,7 +198,7 @@ START=$(date +"%s")
            #LLVM=1 \
            #LLVM_IAS=1 \
            AR=llvm-ar \
-           #AS=llvm-as \
+           AS=llvm-as \
            NM=llvm-nm \
            OBJCOPY=llvm-objcopy \
            OBJDUMP=llvm-objdump \
