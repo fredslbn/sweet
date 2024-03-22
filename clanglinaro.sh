@@ -2,7 +2,7 @@
 
 #
 # Script For Building Android Kernel
-#
+##
 
 ##----------------------------------------------------------##
 # Specify Kernel Directory
